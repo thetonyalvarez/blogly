@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<div class="user-wrapper">
+	<div class="user-image-wrapper">
+		<img class="user-image" src="/{{ user.image_url }}" />
+	</div>
+	<div class="user-details-wrapper">
+		<div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+		<div class="user-modify">
+			<button src="/user/{{ user.id }}/edit" class="user-modify-edit">
+				Edit
+			</button>
+			<button src="/user/{{ user.id }}/delete" class="user-modify-delete">
+				Delete
+			</button>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+<form method="POST" id="add-user-form">
+	<p>First Name: <input name="firstName" /></p>
+	<p>Last Name: <input name="lastName" /></p>
+	<p>Image URL: <input name="imageUrl" /></p>
+	<button type="submit">Save</button>
+</form>
+{% endblock %}
