@@ -2,14 +2,10 @@
 <form method="POST" id="add-user-form">
 	<p>
 		First Name:
-		<input name="firstName" placeholder="{{ user.first_name }}" />
+		<input name="firstName" value="{{ user.first_name }}" />
 	</p>
-	<p>
-		Last Name: <input name="lastName" placeholder="{{ user.last_name }}" />
-	</p>
-	<p>
-		Image URL: <input name="imageUrl" placeholder="{{ user.image_url }}" />
-	</p>
+	<p>Last Name: <input name="lastName" value="{{ user.last_name }}" /></p>
+	<p>Image URL: <input name="imageUrl" value="{{ user.image_url }}" /></p>
 	<button src="/users/{{ user.id }}">Cancel</button>
 	<button type="submit">Save</button>
 </form>

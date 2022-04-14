@@ -5,9 +5,10 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.config['SECRET_KEY'] = "SECRET!"
 debug = DebugToolbarExtension(app)
@@ -17,7 +18,7 @@ db.create_all()
 
 
 @app.route("/")
-def list_users():
+def redirect_to_users():
     """Redirect to list of users."""
 
     return redirect("/users")
@@ -44,9 +45,10 @@ def handle_add_user():
 
     first_name = request.form['firstName']
     last_name = request.form['lastName']
-    image_url = request.form['imageUrl'] if image_url else ''
+    image_url = request.form['imageUrl'] if request.form['imageUrl'] else ''
 
-    user = User(first_name, last_name, image_url)
+    user = User(first_name=first_name,
+                last_name=last_name, image_url=image_url)
 
     db.session.add(user)
     db.session.commit()
@@ -67,20 +69,19 @@ def show_edit_user(user_id):
     """Show the edit page for a user."""
 
     user = User.query.get_or_404(user_id)
-    return redirect("edit-user.html", user=user)
+    return render_template("edit-user.html", user=user)
 
 
 @app.route('/users/<int:user_id>/edit', methods=['POST'])
 def handle_edit_user(user_id):
     """Process the edit form, returning the user to the / users page."""
 
-    first_name = request.form['firstName']
-    last_name = request.form['lastName']
-    image_url = request.form['imageUrl'] if image_url else ''
+    user = User.query.get(user_id)
 
-    user = User(first_name, last_name, image_url)
+    user.first_name = request.form['firstName']
+    user.last_name = request.form['lastName']
+    user.image_url = request.form['imageUrl'] if request.form['imageUrl'] else ''
 
-    db.session.add(user)
     db.session.commit()
 
     return redirect("/users")
