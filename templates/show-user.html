@@ -8,7 +8,7 @@
 		/>
 	</div>
 	<div class="user-details-wrapper">
-		<div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+		<div class="user-name">{{ user.full_name }}</div>
 		<div class="user-modify">
 			<form method="post" action="/users/{{ user.id }}/delete">
 				<a
