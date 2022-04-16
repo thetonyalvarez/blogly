@@ -21,7 +21,9 @@ db.create_all()
 def redirect_to_users():
     """Redirect to list of users."""
 
-    return redirect("/users")
+    posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
+
+    return render_template("/home.html", posts=posts)
 
 
 @app.route("/users")
