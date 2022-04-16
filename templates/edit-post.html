@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %}
+<form method="POST" id="edit-post-form" action="/posts/{{ post.id }}/edit">
+	<h1>Edit Post</h1>
+	<p>Title: <input name="title-input" value="{{ post.title }}" /></p>
+	<p>
+		Post Content:
+		<input name="content-input" value="{{ post.content }}" />
+	</p>
+	<a class="btn btn-outline-secondary">Cancel</a>
+	<button class="btn btn-success" type="submit">Edit</button>
+</form>
+{% endblock %}

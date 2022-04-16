@@ -8,7 +8,7 @@
 		/>
 	</div>
 	<div class="user-details-wrapper">
-		<div class="user-name">{{ user.full_name }}</div>
+		<h1 class="user-name">{{ user.full_name }}</h1>
 		<div class="user-modify">
 			<form method="post" action="/users/{{ user.id }}/delete">
 				<a
@@ -22,6 +22,19 @@
 				</button>
 			</form>
 		</div>
+	</div>
+	<div class="user-posts-wrapper">
+		<h2>Posts</h2>
+		<ul class="user-posts-list">
+			{% for post in posts %}
+			<li>
+				<a href="/posts/{{ post.id }}">{{ post.title }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+		<a href="/users/{{ user.id }}/posts/new" class="btn btn-primary"
+			>Add Post</a
+		>
 	</div>
 </div>
 

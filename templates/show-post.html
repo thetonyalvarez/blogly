@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %}
+<div class="single-post-wrapper">
+	<h1>{{ post.title }}</h1>
+	<p class="single-post-content">{{ post.content }}</p>
+	<p><em>by {{ post.user_rel.full_name }}</em></p>
+	<a href="/posts/{{ post.id }}/edit" class="btn btn-primary">Edit</a>
+	<form method="post" action="/posts/{{ post.id }}/delete">
+		<button class="btn btn-danger">Delete</button>
+	</form>
+</div>
+
+{% endblock %}

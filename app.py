@@ -62,7 +62,10 @@ def show_user(user_id):
     """Show information about the given user."""
 
     user = User.query.get_or_404(user_id)
-    return render_template("show-user.html", user=user)
+
+    posts = Post.query.filter_by(user_id=Post.user_id)
+
+    return render_template("show-user.html", user=user, posts=posts)
 
 
 @app.route('/users/<int:user_id>/edit')
@@ -95,6 +98,75 @@ def handle_delete_user(user_id):
     user = User.query.get_or_404(user_id)
 
     db.session.delete(user)
+    db.session.commit()
+
+    return redirect("/users")
+
+
+# Blog post routes
+@app.route('/users/<int:user_id>/posts/new')
+def show_user_new_post_form(user_id):
+    """Show form to add a post for that user."""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template("/add-post.html", user=user)
+
+
+@app.route('/users/<int:user_id>/posts/new', methods=['POST'])
+def handle_user_new_post(user_id):
+    """Handle add form by user."""
+
+    title = request.form['title-input']
+    content = request.form['content-input']
+
+    post = Post(title=title, content=content, user_id=user_id)
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
+
+
+@app.route('/posts/<int:post_id>')
+def show_single_post(post_id):
+    """Show a post."""
+
+    post = Post.query.filter_by(id=post_id).one()
+
+    return render_template("/show-post.html", post=post)
+
+
+@app.route('/posts/<int:post_id>/edit')
+def show_edit_post_form(post_id):
+    """Show form to edit a post"""
+
+    post = Post.query.get(post_id)
+
+    return render_template("/edit-post.html", post=post)
+
+
+@app.route('/posts/<int:post_id>/edit', methods=['POST'])
+def handle_edit_post(post_id):
+    """Handle editing of a post"""
+
+    post = Post.query.get(post_id)
+
+    post.title = request.form['title-input']
+    post.content = request.form['content-input']
+
+    db.session.commit()
+
+    return redirect(f"/posts/{post_id}")
+
+
+@app.route('/posts/<int:post_id>/delete', methods=['POST'])
+def handle_delete_post(post_id):
+    """Delete the post."""
+
+    post = Post.query.get_or_404(post_id)
+
+    db.session.delete(post)
     db.session.commit()
 
     return redirect("/users")

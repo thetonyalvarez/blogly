@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<form method="POST" id="add-post-form" action="/users/{{ user.id }}/posts/new">
+	<h1>Add Post for {{ user.full_name }}</h1>
+	<p>Title: <input name="title-input" /></p>
+	<p>Post Content: <input name="content-input" /></p>
+	<a class="btn btn-outline-secondary">Cancel</a>
+	<button class="btn btn-success" type="submit">Add</button>
+</form>
+{% endblock %}

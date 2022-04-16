@@ -11,3 +11,8 @@ WHERE
             datname = 'blogly_db') \gexec
 
 \c blogly_db
+INSERT INTO users (first_name, last_name, image_url)
+    VALUES ('Nia', 'Jax', 'https://th.bing.com/th/id/OIP.UFGeRVYH-RQUeZuyGdZxZgHaGL?pid=ImgDet&rs=1'), ('Jey', 'Uso', 'https://th.bing.com/th/id/R.f5f712fd75c3e092e828951da4181afe?rik=cYQgnsT%2f95ws7Q&pid=ImgRaw&r=0');
+
+INSERT INTO posts (title, content, user_id)
+    VALUES ('This is it.', 'the body content', 1), ('#2 This is it.', 'the body content', 1), ('#3 This is it.', 'the body content', 2)
