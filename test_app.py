@@ -23,8 +23,6 @@ class UserViewsTestCase(TestCase):
     def setUp(self):
         """Add sample user."""
 
-        User.query.delete()
-
         user = User(first_name="test_f", last_name="test_l",
                     image_url="https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png")
         db.session.add(user)
@@ -100,9 +98,6 @@ class PostViewsTestCase(TestCase):
 
     def setUp(self):
         """Add sample user."""
-
-        User.query.delete()
-        Post.query.delete()
 
         user = User(first_name="test_f", last_name="test_l",
                     image_url="https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png")
