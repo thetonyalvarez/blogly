@@ -22,6 +22,9 @@ class User(db.Model):
     last_name = db.Column(db.String(25), nullable=False)
     image_url = db.Column(db.String(255), nullable=False)
 
+    posts = db.relationship("Post", backref="user",
+                            cascade="all, delete-orphan")
+
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
@@ -39,8 +42,8 @@ class Post(db.Model):
                            nullable=False,
                            default=datetime.datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user_rel = db.relationship(
-        'User', backref='posts', cascade='all, delete-orphan')
+    # user_rel = db.relationship(
+    # 'User', backref='posts', cascade='all, delete-orphan')
 
     @property
     def cleaned_date(self):

@@ -39,7 +39,7 @@ class UserViewsTestCase(TestCase):
         with app.test_client() as client:
             resp = client.get('/')
 
-            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.status_code, 200)
 
     def test_show_users_followed(self):
         with app.test_client() as client:
