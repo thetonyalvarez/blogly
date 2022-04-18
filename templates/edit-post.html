@@ -6,7 +6,17 @@
 		Post Content:
 		<input name="content-input" value="{{ post.content }}" />
 	</p>
-	<a class="btn btn-outline-secondary">Cancel</a>
-	<button class="btn btn-success" type="submit">Edit</button>
+	{% for tag in tags %}
+	<div class="form-group form-check">
+		{% if tag in post.tags %}
+		<input type="checkbox" checked class="form-check-input" name="post-tag" id="tag_{{ tag.id }}" value="{{ tag.id }}" />
+		{% else %}
+		<input type="checkbox" class="form-check-input" name="post-tag" id="tag_{{ tag.id }}" value="{{ tag.id }}" />
+		{% endif %}
+		<label class="form-check-label" for="{{ tag }}">{{ tag.name }}</label>
+	</div>
+	{% endfor %}
+	<a href="/posts/{{ post.id }}" class="btn btn-outline-secondary">Cancel</a>
+	<button class="btn btn-success" type="submit">Save</button>
 </form>
 {% endblock %}

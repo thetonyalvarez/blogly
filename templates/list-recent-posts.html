@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Blogly Recent Posts</h1>
+{% for post in posts %}
+<div class="list-single-post-wrapper mb-5">
+    <h2><a href="/posts/{{ post.id }}">{{ post.title }}</a></h2>
+    <p>{{ post.content }}</p>
+    <p class="small">By <a href="/users/{{ post.user.id }}">{{post.user.full_name}}</a> on {{ post.cleaned_date }}</p>
+    <div class="tags-wrapper">
+    <b>Tags:</b>
+    {% for tag in post.tags %}
+    <a href="/tags/{{ tag.id }}"><span class="badge badge-primary">{{ tag.name }}</span></a>
+    {% endfor %}
+    </div>
+</div>
+{% endfor %} {% endblock %}
