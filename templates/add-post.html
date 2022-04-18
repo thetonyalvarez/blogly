@@ -3,6 +3,12 @@
 	<h1>Add Post for {{ user.full_name }}</h1>
 	<p>Title: <input name="title-input" /></p>
 	<p>Post Content: <input name="content-input" /></p>
+	<div class="form-group form-check">
+		{% for tag in tags %}
+		<input type="checkbox" class="form-check-input" id="{{ tag }}" />
+		<label class="form-check-label" for="{{ tag }}">{{ tag }}</label>
+		{% endfor %}
+	</div>
 	<a class="btn btn-outline-secondary">Cancel</a>
 	<button class="btn btn-success" type="submit">Add</button>
 </form>

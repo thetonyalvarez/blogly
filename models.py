@@ -5,13 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-def connect_db(app):
-    """Connect to database."""
-
-    db.app = app
-    db.init_app(app)
-
-
 class User(db.Model):
     """User."""
 
@@ -48,3 +41,37 @@ class Post(db.Model):
     @property
     def cleaned_date(self):
         return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
+
+
+class PostTag(db.Model):
+    """Post Tag join table."""
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        'posts.id'), primary_key=True, nullable=False)
+    tag_id = db.Column(db.Integer, db.ForeignKey(
+        'tags.id'), primary_key=True, nullable=False)
+
+
+class Tag(db.Model):
+    """Tag."""
+
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)
+
+    posts = db.relationship(
+        'Post',
+        secondary="posts_tags",
+        # cascade="all,delete",
+        backref="tags",
+    )
+
+
+def connect_db(app):
+    """Connect to database."""
+
+    db.app = app
+    db.init_app(app)
